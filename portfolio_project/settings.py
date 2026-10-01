@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -93,7 +94,8 @@ if os.environ.get('DATABASE_URL'):
             'USER': _db_url.username,
             'PASSWORD': _db_url.password,
             'HOST': _db_url.hostname,
-            'PORT': _db_url.port,
+            'PORT': _db_url.port or 5432,
+            'OPTIONS': {'sslmode': 'require'},
         }
     }
 else:
